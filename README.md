@@ -3,7 +3,13 @@
 ## How to use
 
 ```bash
-deno run --allow-net --allow-write index.ts en_us_001 "Hello world" "./my-file.mp3"
+npm run start en_us_001 "Hello world" "./my-file.mp3"
+```
+```bash
+yarn run start en_us_001 "Hello world" "./my-file.mp3"
+```
+```bash
+pnpm run start en_us_001 "Hello world" "./my-file.mp3"
 ```
 
 `en_us_001` being the voice to use.
