@@ -1,4 +1,4 @@
-# deno-tiktok-tts
+# node-tiktok-tts
 
 ## How to use
 
