@@ -90,17 +90,35 @@ async function callAPI(text, voice) {
 }
 
 /**
+ * @param {string} dirPath directory path
+ * @param {string} fileName file name
+ * @param {string} data data
+ */
+function writeFile(dirPath, fileName, data) {
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath);
+  }
+  fs.writeFileSync(`${dirPath}/${fileName}`, data, {
+    encoding: "base64",
+  });
+}
+
+/**
  *
  * @param {string} mp3 mp3 data
  * @param {number} index path to file
  */
 function writeMP3File(mp3, index) {
-  if (!fs.existsSync("audios")) {
-    fs.mkdirSync("audios");
-  }
-  fs.writeFileSync(`audios/audio-${index}.mp3`, mp3, {
-    encoding: "base64",
-  });
+  writeFile("audios", `audio-${index}.txt`, mp3)
+}
+
+/**
+ *
+ * @param {string} text text
+ * @param {number} index path to file
+ */
+function writeTextFile(text, index) {
+  writeFile("texts", `text-${index}.txt`, text)
 }
 
 function sleep(ms) {
@@ -111,10 +129,19 @@ function sleep(ms) {
 
 async function main() {
   const voice = process.argv[2];
+  const text = process.argv[3];
+
+  await textToSpeechIt(voice, text)
+}
+
+/**
+ * @param {string} voice voice
+ * @param {string} text text
+ */
+async function textToSpeechIt(voice, text) {
   if (!voice || !AVAILABLE_VOICES.includes(voice))
     throw "A valid voice must be passed. Look at AVAILABLE_VOICES to set the desired voice.";
 
-  const text = process.argv[3];
   if (!text) throw "A text must be passed as the second argument.";
 
   const textAsArr = text.split(" ");
@@ -135,7 +162,6 @@ async function main() {
     }
   }
 
-  let mp3s = "";
   for (let index = 0; index < texts.length; index++) {
     if (index !== 0) {
       await sleep(5);
@@ -143,11 +169,10 @@ async function main() {
     const text = texts[index];
     const mp3 = await callAPI(text, voice);
 
-    mp3s += mp3;
-    writeMP3File(mp3s, index);
+    writeMP3File(mp3, index);
+
+    writeTextFile(text, index)
   }
 }
 
-(async () => {
-  await main();
-})();
+export default textToSpeechIt;
