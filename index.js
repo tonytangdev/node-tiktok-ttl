@@ -109,7 +109,7 @@ function writeFile(dirPath, fileName, data) {
  * @param {number} index path to file
  */
 function writeMP3File(mp3, index) {
-  writeFile("audios", `audio-${index}.txt`, mp3)
+  writeFile("audios", `audio-${index}.mp3`, mp3)
 }
 
 /**
