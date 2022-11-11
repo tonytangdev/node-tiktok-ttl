@@ -3,13 +3,13 @@
 ## How to use
 
 ```bash
-npm run start en_us_001 "Hello world" "./my-file.mp3"
+npm run start en_us_001 "Hello world"
 ```
 ```bash
-yarn run start en_us_001 "Hello world" "./my-file.mp3"
+yarn run start en_us_001 "Hello world"
 ```
 ```bash
-pnpm run start en_us_001 "Hello world" "./my-file.mp3"
+pnpm run start en_us_001 "Hello world"
 ```
 
 `en_us_001` being the voice to use.
