@@ -95,7 +95,10 @@ async function callAPI(text, voice) {
  * @param {number} index path to file
  */
 function writeMP3File(mp3, index) {
-  fs.writeFileSync(`audio-${index}.mp3`, mp3, {
+  if (!fs.existsSync("audios")) {
+    fs.mkdirSync("audios");
+  }
+  fs.writeFileSync(`audios/audio-${index}.mp3`, mp3, {
     encoding: "base64",
   });
 }
