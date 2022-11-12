@@ -132,9 +132,10 @@ function sleep(ms) {
 /**
  * @param {string} voice voice
  * @param {string} text text
- * @param {string} dirPath dirPath
+ * @param {string} textDirPath dirPath
+ * @param {string} audioDirPath audioDirPath
  */
-async function textToSpeechIt(voice, text, dirPath) {
+async function textToSpeechIt(voice, text, textDirPath, audioDirPath) {
   if (!voice || !AVAILABLE_VOICES.includes(voice))
     throw "A valid voice must be passed. Look at AVAILABLE_VOICES to set the desired voice.";
 
@@ -165,9 +166,9 @@ async function textToSpeechIt(voice, text, dirPath) {
     const text = texts[index];
     const mp3 = await callAPI(text, voice);
 
-    writeMP3File(mp3, index, dirPath);
+    writeMP3File(mp3, index, audioDirPath);
 
-    writeTextFile(text, index, dirPath)
+    writeTextFile(text, index, textDirPath)
   }
 }
 
