@@ -107,18 +107,20 @@ function writeFile(dirPath, fileName, data) {
  *
  * @param {string} mp3 mp3 data
  * @param {number} index path to file
+ * @param {string} dirPath dirPath
  */
-function writeMP3File(mp3, index) {
-  writeFile("audios", `audio-${index}.mp3`, mp3)
+function writeMP3File(mp3, index, dirPath) {
+  writeFile(dirPath, `audio-${index}.mp3`, mp3)
 }
 
 /**
  *
  * @param {string} text text
  * @param {number} index path to file
+ * @param {string} dirPath dirPath
  */
-function writeTextFile(text, index) {
-  writeFile("texts", `text-${index}.txt`, text)
+function writeTextFile(text, index, dirPath) {
+  writeFile(dirPath, `text-${index}.txt`, text)
 }
 
 function sleep(ms) {
@@ -127,18 +129,12 @@ function sleep(ms) {
   });
 }
 
-async function main() {
-  const voice = process.argv[2];
-  const text = process.argv[3];
-
-  await textToSpeechIt(voice, text)
-}
-
 /**
  * @param {string} voice voice
  * @param {string} text text
+ * @param {string} dirPath dirPath
  */
-async function textToSpeechIt(voice, text) {
+async function textToSpeechIt(voice, text, dirPath) {
   if (!voice || !AVAILABLE_VOICES.includes(voice))
     throw "A valid voice must be passed. Look at AVAILABLE_VOICES to set the desired voice.";
 
@@ -169,9 +165,9 @@ async function textToSpeechIt(voice, text) {
     const text = texts[index];
     const mp3 = await callAPI(text, voice);
 
-    writeMP3File(mp3, index);
+    writeMP3File(mp3, index, dirPath);
 
-    writeTextFile(text, index)
+    writeTextFile(text, index, dirPath)
   }
 }
 
