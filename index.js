@@ -93,13 +93,14 @@ async function callAPI(text, voice) {
  * @param {string} dirPath directory path
  * @param {string} fileName file name
  * @param {string} data data
+ * @param {string} encoding encoding
  */
-function writeFile(dirPath, fileName, data) {
+function writeFile(dirPath, fileName, data, encoding = "utf8") {
   if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath);
   }
   fs.writeFileSync(`${dirPath}/${fileName}`, data, {
-    encoding: "base64",
+    encoding: encoding,
   });
 }
 
@@ -110,7 +111,7 @@ function writeFile(dirPath, fileName, data) {
  * @param {string} dirPath dirPath
  */
 function writeMP3File(mp3, index, dirPath) {
-  writeFile(dirPath, `audio-${index}.mp3`, mp3)
+  writeFile(dirPath, `audio-${index}.mp3`, mp3, "base64")
 }
 
 /**
